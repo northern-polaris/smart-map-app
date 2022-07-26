@@ -1,1 +1,11 @@
-<app-property-list-form></app-property-list-form>
+<div *ngFor="let record of results" style="margin-bottom: 10px">
+  <app-property-list-item
+    [city]="record.city"
+    [management]="record.management"
+    [name]="record.name"
+    [photo]="record.photo"
+    [streetAddress]="record.streetAddress"
+  >
+  </app-property-list-item>
+</div>
+

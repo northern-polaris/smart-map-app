@@ -10,6 +10,7 @@ import { PropertyModule } from './features/property/property.module';
 import { SideMenuComponent } from './layout/side-menu/side-menu.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [AppComponent, SideMenuComponent],
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     PropertyModule,
     SharedModule,
     HttpClientModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

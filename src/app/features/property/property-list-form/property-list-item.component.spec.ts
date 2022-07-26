@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyListFormComponent } from './property-list-form.component';
+import { PropertyListItemComponent } from './property-list-item.component';
 
 describe('PropertyListFormComponent', () => {
-  let component: PropertyListFormComponent;
-  let fixture: ComponentFixture<PropertyListFormComponent>;
+  let component: PropertyListItemComponent;
+  let fixture: ComponentFixture<PropertyListItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PropertyListFormComponent ]
+      declarations: [ PropertyListItemComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PropertyListFormComponent);
+    fixture = TestBed.createComponent(PropertyListItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
