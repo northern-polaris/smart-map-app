@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PropertyService} from "../../core/services/property.service";
 
 @Component({
   selector: 'app-side-menu',
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private propertyService: PropertyService) { }
+  results: any;
 
   ngOnInit(): void {
+    this.getAllProperties();
+
+  }
+  getAllProperties() {
+    this.results = this.propertyService.getProperties().subscribe((res) => {
+      return res;
+    });
+    console.log(this.results);
   }
 
 }

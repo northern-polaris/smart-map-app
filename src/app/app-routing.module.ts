@@ -10,6 +10,14 @@ const routes: Routes = [
       import('./features/map/map.module').then((m) => m.MapModule),
   },
   {
+    path: 'property',
+    loadChildren: () =>
+      import('./features/property/property.module').then(
+        (m) => m.PropertyModule
+      ),
+  },
+
+  {
     path: '**',
     loadChildren: () =>
       import('./features/map/map.module').then((m) => m.MapModule),
