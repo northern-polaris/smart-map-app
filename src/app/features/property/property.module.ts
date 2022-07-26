@@ -8,7 +8,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [PropertyDetailComponent, PropertyListItemComponent],
-  exports: [PropertyListItemComponent],
+  exports: [PropertyListItemComponent, PropertyDetailComponent],
   imports: [CommonModule, PropertyRoutingModule, SharedModule],
 })
 export class PropertyModule {}

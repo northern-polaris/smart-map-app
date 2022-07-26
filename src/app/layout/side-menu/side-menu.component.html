@@ -1,11 +1,17 @@
-<div *ngFor="let record of results" style="margin-bottom: 10px">
-  <app-property-list-item
-    [city]="record.city"
-    [management]="record.management"
-    [name]="record.name"
-    [photo]="record.photo"
-    [streetAddress]="record.streetAddress"
-  >
-  </app-property-list-item>
-</div>
+<ng-container *ngIf="!selectedPropertyId">
+  <div *ngFor="let record of results" style="margin-bottom: 10px">
+    <app-property-list-item
+      (click)="viewProperty(record.propertyID)"
+      [city]="record.city"
+      [management]="record.management"
+      [name]="record.name"
+      [photo]="record.photo"
+      [streetAddress]="record.streetAddress"
+    >
+    </app-property-list-item>
+  </div>
+</ng-container>
 
+<ng-container *ngIf="selectedPropertyId">
+  <app-property-detail [propertyID]="selectedPropertyId"></app-property-detail>
+</ng-container>

@@ -18,8 +18,4 @@ export class PropertyListItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  goToDetails() {
-    this.router.navigateByUrl('details/id');
-  }
 }

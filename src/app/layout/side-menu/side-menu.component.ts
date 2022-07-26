@@ -11,6 +11,8 @@ export class SideMenuComponent implements OnInit {
 
   results: any;
   agentInfo: any;
+  selectedPropertyId: number = 0;
+
 
   ngOnInit(): void {
     this.getAllProperties();
@@ -21,5 +23,9 @@ export class SideMenuComponent implements OnInit {
       this.results = res.records;
       this.agentInfo = res.agentInfo;
     });
+  }
+
+  viewProperty(id: any) {
+    this.selectedPropertyId = id
   }
 }

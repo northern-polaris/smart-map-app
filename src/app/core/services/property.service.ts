@@ -7,16 +7,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PropertyService {
+  baseUrl = 'https://app.smartapartmentdata.com/List/json/';
+  baseParams = {
+    listID: '5638557',
+    token: 'A0E2523B25B805CBB6F8EC9D98AF56457EE7A255',
+  };
+
   constructor(private httpClient: HttpClient) {}
 
-  getProperties() {
-    const url = 'https://app.smartapartmentdata.com/List/json/listItems.aspx';
+  getProperties(): Observable<any> {
+    const url = `${this.baseUrl}listItems.aspx`;
+    const options = { params: generateHttpParams(this.baseParams) };
 
-    const params = {
-      listID: '5638557',
-      token: 'A0E2523B25B805CBB6F8EC9D98AF56457EE7A255',
-    };
+    return this.httpClient.get<Observable<any>>(url, options);
+  }
+
+  getProperty(id: number): Observable<any> {
+    const params = { ...this.baseParams, propertyID: id };
     const options = { params: generateHttpParams(params) };
+    const url = `${this.baseUrl}propertyItem.aspx`;
 
     return this.httpClient.get<Observable<any>>(url, options);
   }
