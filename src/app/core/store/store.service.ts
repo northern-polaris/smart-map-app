@@ -16,7 +16,7 @@ export class StoreService {
     return this._stateObserver;
   }
 
-  set setState(value: object) {
+  set state(value: object) {
     let newState = { ...this._state, ...value };
     this._state = newState;
 
