@@ -9,7 +9,8 @@ import {
 
 import { StoreService } from '../../../core/store/store.service';
 import { environment } from '../../../../environments/environment';
-import { Map, Marker, NavigationControl } from 'maplibre-gl';
+import { Map, Marker, NavigationControl, Popup } from 'maplibre-gl';
+import { findCenter } from '../../../core/utils';
 
 @Component({
   selector: 'app-map-box',
@@ -17,8 +18,10 @@ import { Map, Marker, NavigationControl } from 'maplibre-gl';
   styleUrls: ['./map-box.component.scss'],
 })
 export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
-  map: Map | undefined;
+  map?: Map;
   propertyList: any[] = [];
+  mapMarkers: Marker[] = [];
+  geoCoordinates: any[] = [];
 
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
@@ -37,7 +40,7 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map = new Map({
       container: this.mapContainer.nativeElement,
       style: `https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=${environment.apiKey}`,
-      center: [initialState.lng, initialState.lat],
+      // center: [initialState.lng, initialState.lat],
       zoom: initialState.zoom,
     });
 
@@ -46,16 +49,60 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.storeService.stateObserver.subscribe((state: any) => {
       if (!state) return;
+      if (!(this.map instanceof Map)) return;
+      console.log('state', state);
       this.propertyList = state.propertyList;
       for (const property of this.propertyList) {
-        if (this.map instanceof Map) {
-          new Marker({ color: '#FF0000' })
-            .setLngLat([property.geocode.Longitude, property.geocode.Latitude])
-            .addTo(this.map);
-        }
+        this.geoCoordinates.push({
+          lat: property.geocode.Latitude,
+          lng: property.geocode.Longitude,
+        });
+
+        const marker = new Marker({
+          color: '#FF0000',
+          // draggable: true
+        });
+        marker
+          .setLngLat([property.geocode.Longitude, property.geocode.Latitude])
+          .addTo(this.map);
+
+        this.addOnClickMarkerEventListener(marker, property);
+        this.addPopupMarkerEvents(marker, property);
+
+        this.mapMarkers.push(marker); // to store all markers in array, no purpose for the moment
       }
+      const centerLocation = findCenter(this.geoCoordinates);
+      this.map.setCenter(centerLocation);
     });
 
+    this.listenMapClicks();
+  }
+
+  addPopupMarkerEvents(marker: Marker, property: any) {
+    // Set PopUp or Tooltip on hover
+    const htmlStr = `
+      <h1>${property.name}</h1>
+      <h3>${property.streetAddress}</h3>
+      <img src="${property.photo}" alt="">`;
+
+    marker.getElement().addEventListener('mouseenter', (e) => {
+      marker.setPopup(new Popup().setHTML(htmlStr));
+      marker.togglePopup(); // toggle popup open or closed
+    });
+    // Remove popup on leave
+    marker.getElement().addEventListener('mouseleave', (e) => {
+      marker.getPopup().remove();
+    });
+  }
+
+  addOnClickMarkerEventListener(marker: Marker, property: any) {
+    marker.getElement().addEventListener('click', (e) => {
+      this.storeService.state = { selectedPropertyId: property.propertyID };
+    });
+  }
+
+  listenMapClicks() {
+    if (!(this.map instanceof Map)) return;
     // This listen for clicks on map
     this.map.on('click', function (e) {
       // The event object (e) contains information like the

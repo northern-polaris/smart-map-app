@@ -156,15 +156,12 @@
           </div>
         </div>
         <mat-divider></mat-divider>
-        <div *ngIf="property.unitAmenities" style="height: 50px">
-          <div class="mat-list-item-content">
-            COMMUNITY FEATURES
+        <div *ngIf="property.unitAmenities" class="mat-list-item-content" style="height: 50px">
+          PROPERTY AMENITIES
+          <div *ngFor="let unit of property.unitAmenities.length" class="mat-list-item-content">
             <div class="mat-list-item-icon">
-              <div *ngIf="property.unitAmenities['Black/Stainless Appliances'] ==='true'">
-                Black/Stainless Appliances
-              </div>
-              <div *ngIf="property.unitAmenities['Fitness Center']">
-                Fitness Center
+              <div >
+                {{unit}}
               </div>
 
             </div>

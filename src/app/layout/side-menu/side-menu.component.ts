@@ -5,24 +5,18 @@ import { StoreService } from '../../core/store/store.service';
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styles: [
-    `
-      .header {
-        background-color: #2f5d8d;
-      }
-    `,
-  ],
+  styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
   constructor(
     private propertyService: PropertyService,
     private storeService: StoreService
-  ) {}
+  ) {
+  }
 
   results: any;
   agentInfo: any;
   selectedPropertyId: number = 0;
-
 
   ngOnInit(): void {
     this.getAllProperties();
@@ -32,7 +26,7 @@ export class SideMenuComponent implements OnInit {
     this.propertyService.getProperties().subscribe((res: any) => {
       this.results = res.records;
       this.agentInfo = res.agentInfo;
-      this.storeService.state = { propertyList: this.results };
+      this.storeService.state = {propertyList: this.results};
     });
   }
 

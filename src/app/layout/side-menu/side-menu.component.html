@@ -2,7 +2,7 @@
   <mat-toolbar class="header">
     Smart Map
   </mat-toolbar>
-  <div *ngFor="let record of results" style="margin-bottom: 10px">
+  <div *ngFor="let record of results" style="margin: 10px 0">
     <app-property-list-item
       (click)="viewProperty(record.propertyID)"
       [city]="record.city"
