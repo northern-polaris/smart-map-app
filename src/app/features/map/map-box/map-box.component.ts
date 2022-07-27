@@ -73,6 +73,7 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       const centerLocation = findCenter(this.geoCoordinates);
       this.map.setCenter(centerLocation);
+      this.map.setZoom(initialState.zoom);
     });
 
     this.listenMapClicks();
@@ -98,6 +99,17 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   addOnClickMarkerEventListener(marker: Marker, property: any) {
     marker.getElement().addEventListener('click', (e) => {
       this.storeService.state = { selectedPropertyId: property.propertyID };
+      for (let markerItem of this.mapMarkers) {
+        markerItem.remove();
+      }
+      if (this.map instanceof Map) {
+        marker.addTo(this.map);
+        this.map.setCenter({
+          lat: property.geocode.Latitude,
+          lng: property.geocode.Longitude,
+        });
+        this.map.setZoom(15);
+      }
     });
   }
 

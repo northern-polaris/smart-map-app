@@ -11,8 +11,7 @@ export class SideMenuComponent implements OnInit {
   constructor(
     private propertyService: PropertyService,
     private storeService: StoreService
-  ) {
-  }
+  ) {}
 
   results: any;
   agentInfo: any;
@@ -20,13 +19,14 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllProperties();
+    this.onChangeOfPropertyId();
   }
 
   getAllProperties() {
     this.propertyService.getProperties().subscribe((res: any) => {
       this.results = res.records;
       this.agentInfo = res.agentInfo;
-      this.storeService.state = {propertyList: this.results};
+      this.storeService.state = { propertyList: this.results };
     });
   }
 
@@ -36,5 +36,13 @@ export class SideMenuComponent implements OnInit {
 
   goBack() {
     this.selectedPropertyId = 0;
+    this.storeService.state = { selectedPropertyId: 0 };
+  }
+
+  onChangeOfPropertyId() {
+    this.storeService.stateObserver.subscribe((state) => {
+      if (!state.selectedPropertyId) return;
+      this.selectedPropertyId = state.selectedPropertyId;
+    });
   }
 }
