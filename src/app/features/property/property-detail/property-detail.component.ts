@@ -9,6 +9,7 @@ import { PropertyService } from '../../../core/services/property.service';
 export class PropertyDetailComponent implements OnInit {
   @Input() propertyID?: number;
   property: any;
+  panelOpenState = false;
 
   constructor(private propertyService: PropertyService) {}
 

@@ -1,4 +1,7 @@
 <ng-container *ngIf="!selectedPropertyId">
+  <mat-toolbar class="header">
+    Smart Map
+  </mat-toolbar>
   <div *ngFor="let record of results" style="margin-bottom: 10px">
     <app-property-list-item
       (click)="viewProperty(record.propertyID)"
@@ -13,5 +16,12 @@
 </ng-container>
 
 <ng-container *ngIf="selectedPropertyId">
+  <mat-toolbar class="header">
+    <span (click)="goBack()" class="header">
+      <mat-icon>arrow_back_ios</mat-icon>
+      Go Back
+  </span>
+  </mat-toolbar>
+
   <app-property-detail [propertyID]="selectedPropertyId"></app-property-detail>
 </ng-container>

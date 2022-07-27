@@ -1,0 +1,52 @@
+mat-card {
+  padding: 0
+}
+
+mat-card-header {
+  background-color: #618ABA;
+}
+
+mat-icon {
+  width: 30px;
+  height: 30px;
+  color: #032539;
+}
+
+.material-icons {
+  font-size: 30px;
+}
+
+.extra-detail {
+  background-color: #618aba;
+}
+
+.property-address {
+  padding-right: 30px;
+}
+
+.mat-list-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+  position: relative;
+  height: inherit;
+}
+
+.mat-list-item-text {
+  padding-right: 0;
+  padding-left: 16px;
+}
+
+.mat-list-item-icon {
+  pointer-events: none;
+}
+
+.mat-list-option .mat-list-item-content {
+  height: 50px;
+}
+
+.mat-card-header .mat-card-title {
+  padding-top: 10px;
+}

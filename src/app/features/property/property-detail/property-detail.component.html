@@ -1,1 +1,185 @@
-<p>{{propertyID}} - {{property.name}}</p>
+<mat-card class="property-detail-card">
+  <mat-card-header>
+    <mat-card-title>{{property.name}}</mat-card-title>
+    <mat-card-subtitle>{{property.streetAddress}}, {{property.city}}</mat-card-subtitle>
+  </mat-card-header>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button [matTooltip]="property.phone"
+            class="example-button"
+            mat-button
+            matTooltipHideDelay="10">
+      <mat-icon> contact_phone</mat-icon>
+    </button>
+    <button #tooltip="matTooltip" [matTooltip]="property.email"
+            class="example-button"
+            mat-button
+            matTooltipHideDelay="10">
+      <mat-icon> email</mat-icon>
+    </button>
+    <button #tooltip="matTooltip" [matTooltip]="property.url"
+            class="example-button"
+            mat-button
+            matTooltipHideDelay="10">
+      <mat-icon>language</mat-icon>
+    </button>
+    <button #tooltip="matTooltip" *ngIf="property.favorite" [matTooltip]="'Top Rated'"
+            class="example-button"
+            mat-button
+            matTooltipHideDelay="10">
+      <mat-icon>favorite</mat-icon>
+    </button>
+  </div>
+
+  <mat-card-content>
+
+    <div class="wrapper" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <mat-list class="property-details">
+
+        <mat-list-item>
+          <span>PHOTOS</span>
+          <div *ngFor="let photo in property.photos">
+            <img [alt]="" [src]="property.photos"/>
+          </div>
+
+
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+                             class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-list-item>
+                <mat-icon>location_city</mat-icon>
+                <div class="mat-list-item-text">
+                  <span>{{property.management}}</span>
+                </div>
+              </mat-list-item>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let address of property.managementOffices" class="property-address">
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div class="mat-list-item-content">
+                <div class="mat-list-item-icon">
+                  <mat-icon> location_on</mat-icon>
+                </div>
+                <div class="mat-list-item-text">
+                  <span> {{address.streetAddress}}, {{address.city}}</span>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-list-item *ngIf="property.favorite">
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon> streetview</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>{{property.neighborhood}}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon> person_pin</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>{{property.onsiteManager}}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon>business_center</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>{{property.regionalName}}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item *ngIf="property.section8">
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>Section 8</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item *ngIf="property.petInfo.allowed">
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon>pets</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>Pet Friendly</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="mat-list-item-content">
+            <div class="mat-list-item-icon">
+              <mat-icon>build</mat-icon>
+            </div>
+            <div class="mat-list-item-text">
+              <span>Build: {{property.yearBuilt}}</span> <br>
+              <span>Renovated: {{property.yearRenovated}}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div *ngIf="property.highValueAmenities" style="height: 50px">
+          <div class="mat-list-item-content">
+            HIGH-VALUE Amenities
+            <div class="mat-list-item-icon">
+              <div *ngIf="property.highValueAmenities['Black/Stainless Appliances']">
+                Black/Stainless Appliances
+              </div>
+              <div *ngIf="property.highValueAmenities['Black/Stainless Appliances']">
+                Black/Stainless Appliances
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="property.unitAmenities" style="height: 50px">
+          <div class="mat-list-item-content">
+            COMMUNITY FEATURES
+            <div class="mat-list-item-icon">
+              <div *ngIf="property.unitAmenities['Black/Stainless Appliances'] ==='true'">
+                Black/Stainless Appliances
+              </div>
+              <div *ngIf="property.unitAmenities['Fitness Center']">
+                Fitness Center
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </mat-list>
+      <mat-divider></mat-divider>
+
+
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+
+
+

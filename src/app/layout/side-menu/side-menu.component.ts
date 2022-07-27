@@ -4,7 +4,13 @@ import { PropertyService } from '../../core/services/property.service';
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styles: [],
+  styles: [
+    `
+      .header {
+        background-color: #2f5d8d;
+      }
+    `,
+  ],
 })
 export class SideMenuComponent implements OnInit {
   constructor(private propertyService: PropertyService) {}
@@ -12,7 +18,6 @@ export class SideMenuComponent implements OnInit {
   results: any;
   agentInfo: any;
   selectedPropertyId: number = 0;
-
 
   ngOnInit(): void {
     this.getAllProperties();
@@ -26,6 +31,10 @@ export class SideMenuComponent implements OnInit {
   }
 
   viewProperty(id: any) {
-    this.selectedPropertyId = id
+    this.selectedPropertyId = id;
+  }
+
+  goBack() {
+    this.selectedPropertyId = 0;
   }
 }
