@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { generateHttpParams } from '../utils';
 import { Observable } from 'rxjs';
+import {PropertyListResponse} from "../models/property";
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +16,11 @@ export class PropertyService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getProperties(): Observable<any> {
+  getProperties(): Observable<PropertyListResponse> {
     const url = `${this.baseUrl}listItems.aspx`;
     const options = { params: generateHttpParams(this.baseParams) };
 
-    return this.httpClient.get<Observable<any>>(url, options);
+    return this.httpClient.get<PropertyListResponse>(url, options);
   }
 
   getProperty(id: number): Observable<any> {

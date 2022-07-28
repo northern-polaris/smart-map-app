@@ -37,9 +37,5 @@ export class PropertyDetailComponent implements OnInit {
       width: '1000px',
       data: { src: imgSrc },
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
   }
 }

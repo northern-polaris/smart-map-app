@@ -11,6 +11,7 @@ import { StoreService } from '../../../core/store/store.service';
 import { environment } from '../../../../environments/environment';
 import { Map, Marker, NavigationControl, Popup } from 'maplibre-gl';
 import { findCenter } from '../../../core/utils';
+import {Property} from "../../../core/models/property";
 
 @Component({
   selector: 'app-map-box',
@@ -19,7 +20,7 @@ import { findCenter } from '../../../core/utils';
 })
 export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   map?: Map;
-  propertyList: any[] = [];
+  propertyList: Property[] = [];
   mapMarkers: Marker[] = [];
   geoCoordinates: any[] = [];
 
@@ -50,7 +51,6 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.storeService.stateObserver.subscribe((state: any) => {
       if (!state) return;
       if (!(this.map instanceof Map)) return;
-      console.log('state', state);
       this.propertyList = state.propertyList;
       for (const property of this.propertyList) {
         this.geoCoordinates.push({
