@@ -1,9 +1,9 @@
-<mat-card class="property-detail-card">
+<mat-card *ngIf="property" class="property-detail-card">
   <mat-card-header>
     <mat-card-title>{{property.name}}</mat-card-title>
     <mat-card-subtitle>{{property.streetAddress}}, {{property.city}}</mat-card-subtitle>
   </mat-card-header>
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <div class="icons" fxLayout="row" fxLayoutAlign="center center">
     <button [matTooltip]="property.phone"
             class="example-button"
             mat-button
@@ -36,14 +36,38 @@
 
       <mat-list class="property-details">
 
-        <mat-list-item>
-          <span>PHOTOS</span>
-          <div *ngFor="let photo in property.photos">
-            <img [alt]="" [src]="property.photos"/>
+        <!--        <mat-list-item>-->
+        <!--          <span>PHOTOS</span>-->
+        <!--          <div class="image-list" fxLayout="row">-->
+        <!--            <ng-container *ngFor="let image of property.photos">-->
+        <!--              <img [src]="image" class="image-list__item"/>-->
+        <!--            </ng-container>-->
+        <!--          </div>-->
+        <!--        </mat-list-item>-->
+
+
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+                             *ngIf="property.photos"
+                             class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-list-item>
+                <mat-icon>home</mat-icon>
+                <div class="mat-list-item-text">
+                  <span>PHOTOS</span>
+                </div>
+              </mat-list-item>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="second-filters" fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+            <ng-container *ngFor="let image of property.photos">
+              <div class="image-list">
+                <img (click)="openDialog(image)" [src]="image" class="image-list__item"/>
+              </div>
+            </ng-container>
           </div>
+        </mat-expansion-panel>
 
-
-        </mat-list-item>
         <mat-divider></mat-divider>
 
         <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
@@ -94,8 +118,8 @@
             </div>
           </div>
         </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
+        <mat-divider *ngIf="property.regionalName"></mat-divider>
+        <mat-list-item *ngIf="property.regionalName">
           <div class="mat-list-item-content">
             <div class="mat-list-item-icon">
               <mat-icon>business_center</mat-icon>
@@ -140,34 +164,63 @@
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
-        <div *ngIf="property.highValueAmenities" style="height: 50px">
-          <div class="mat-list-item-content">
-            HIGH-VALUE Amenities
-            <div class="mat-list-item-icon">
-              <div *ngIf="property.highValueAmenities['Black/Stainless Appliances']">
-                Black/Stainless Appliances
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+                             *ngIf="property.highValueAmenities != 0"
+                             class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-list-item>
+                <mat-icon>devices_other</mat-icon>
+                <div class="mat-list-item-text">
+                  <span>HIGH-VALUE Amenities</span>
+                </div>
+              </mat-list-item>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let unit of property.highValueAmenities" class="property-address">
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div class="mat-list-item-content">
+                <div class="mat-list-item-icon">
+                  <mat-icon>adjust</mat-icon>
+                </div>
+                <div class="mat-list-item-text">
+                  <span>{{unit}}</span>
+                </div>
               </div>
-              <div *ngIf="property.highValueAmenities['Black/Stainless Appliances']">
-                Black/Stainless Appliances
-              </div>
-
-            </div>
-
+            </mat-list-item>
           </div>
-        </div>
+        </mat-expansion-panel>
         <mat-divider></mat-divider>
-        <div *ngIf="property.unitAmenities" class="mat-list-item-content" style="height: 50px">
-          PROPERTY AMENITIES
-          <div *ngFor="let unit of property.unitAmenities.length" class="mat-list-item-content">
-            <div class="mat-list-item-icon">
-              <div >
-                {{unit}}
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+                             *ngIf="property.unitAmenities != 0"
+                             class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-list-item>
+                <mat-icon>home</mat-icon>
+                <div class="mat-list-item-text">
+                  <span>PROPERTY AMENITIES</span>
+                </div>
+              </mat-list-item>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let unit of property.unitAmenities" class="property-address">
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div class="mat-list-item-content">
+                <div class="mat-list-item-icon">
+                  <mat-icon>adjust</mat-icon>
+                </div>
+                <div class="mat-list-item-text">
+                  <span>{{unit}}</span>
+                </div>
               </div>
-
-            </div>
-
+            </mat-list-item>
           </div>
-        </div>
+        </mat-expansion-panel>
+
+
       </mat-list>
       <mat-divider></mat-divider>
 

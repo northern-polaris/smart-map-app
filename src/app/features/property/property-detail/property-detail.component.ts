@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PropertyService } from '../../../core/services/property.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-property-detail',
@@ -11,7 +13,10 @@ export class PropertyDetailComponent implements OnInit {
   property: any;
   panelOpenState = false;
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(
+    private propertyService: PropertyService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getProperty();
@@ -25,5 +30,16 @@ export class PropertyDetailComponent implements OnInit {
           this.property = res;
         });
     }
+  }
+
+  openDialog(imgSrc: string): void {
+    const dialogRef = this.dialog.open(ImageDialogComponent, {
+      width: '1000px',
+      data: { src: imgSrc },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

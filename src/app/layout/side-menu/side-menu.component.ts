@@ -41,7 +41,7 @@ export class SideMenuComponent implements OnInit {
 
   onChangeOfPropertyId() {
     this.storeService.stateObserver.subscribe((state) => {
-      if (!state.selectedPropertyId) return;
+      if (!state?.selectedPropertyId) return;
       this.selectedPropertyId = state.selectedPropertyId;
     });
   }
