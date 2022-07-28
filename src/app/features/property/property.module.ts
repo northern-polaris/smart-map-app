@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PropertyRoutingModule } from './property-routing.module';
 import { PropertyDetailComponent } from './property-detail/property-detail.component';
 import { PropertyListItemComponent } from './property-list-item/property-list-item.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -16,12 +14,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ImageDialogComponent,
   ],
   exports: [PropertyListItemComponent, PropertyDetailComponent],
-  imports: [
-    CommonModule,
-    PropertyRoutingModule,
-    SharedModule,
-    FlexModule,
-    MatDialogModule,
-  ],
+  imports: [CommonModule, SharedModule, FlexModule, MatDialogModule],
 })
 export class PropertyModule {}

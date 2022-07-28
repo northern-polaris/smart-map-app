@@ -1,13 +1,11 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-
-import {MapRoutingModule} from './map-routing.module';
-import {MapBoxComponent} from './map-box/map-box.component';
-import {PropertyModule} from '../property/property.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MapBoxComponent } from './map-box/map-box.component';
+import { PropertyModule } from '../property/property.module';
 
 @NgModule({
   declarations: [MapBoxComponent],
-  imports: [CommonModule, MapRoutingModule, PropertyModule],
+  imports: [CommonModule, PropertyModule],
+  exports: [MapBoxComponent],
 })
-export class MapModule {
-}
+export class MapModule {}
