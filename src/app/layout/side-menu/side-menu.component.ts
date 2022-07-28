@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyService } from '../../core/services/property.service';
 import { StoreService } from '../../core/store/store.service';
-import {Property, PropertyListResponse} from "../../core/models/property";
+import { Property, PropertyListResponse } from '../../core/models/property';
 
 @Component({
   selector: 'app-side-menu',
@@ -24,20 +24,27 @@ export class SideMenuComponent implements OnInit {
   }
 
   getAllProperties() {
-    this.propertyService.getProperties().subscribe((res: PropertyListResponse) => {
-      this.results = res.records;
-      this.agentInfo = res.agentInfo;
-      this.storeService.state = { propertyList: this.results };
-    });
+    this.propertyService
+      .getProperties()
+      .subscribe((res: PropertyListResponse) => {
+        this.results = res.records;
+        this.agentInfo = res.agentInfo;
+        this.storeService.state = { propertyList: this.results };
+      });
   }
 
-  viewProperty(id: any) {
-    this.selectedPropertyId = id;
+  viewProperty(id: any, index: number) {
+    // this.selectedPropertyId = id;
+    this.storeService.state = {
+      selectedPropertyId: id,
+      openDetails: true,
+      selectedPropertyObj: this.results[index],
+    };
   }
 
   goBack() {
     this.selectedPropertyId = 0;
-    this.storeService.state = { selectedPropertyId: 0 };
+    this.storeService.state = { selectedPropertyId: 0, openDetails: false, selectedPropertyObj: null};
   }
 
   onChangeOfPropertyId() {

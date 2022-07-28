@@ -2,9 +2,9 @@
   <mat-toolbar class="header">
     Smart Map
   </mat-toolbar>
-  <div *ngFor="let record of results" style="margin: 10px 0">
+  <div *ngFor="let record of results; let i = index" style="margin: 10px 0">
     <app-property-list-item
-      (click)="viewProperty(record.propertyID)"
+      (click)="viewProperty(record.propertyID, i)"
       [city]="record.city"
       [management]="record.management"
       [name]="record.name"

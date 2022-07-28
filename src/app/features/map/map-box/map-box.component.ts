@@ -9,9 +9,9 @@ import {
 
 import { StoreService } from '../../../core/store/store.service';
 import { environment } from '../../../../environments/environment';
-import { Map, Marker, NavigationControl, Popup } from 'maplibre-gl';
+import { Map, Marker, Popup } from 'maplibre-gl';
 import { findCenter } from '../../../core/utils';
-import {Property} from "../../../core/models/property";
+import { Property } from '../../../core/models/property';
 
 @Component({
   selector: 'app-map-box',
@@ -46,11 +46,26 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     // Sample how to add a mark
-    this.map.addControl(new NavigationControl());
+    // this.map.addControl(new NavigationControl());
 
     this.storeService.stateObserver.subscribe((state: any) => {
       if (!state) return;
       if (!(this.map instanceof Map)) return;
+
+      if (state?.selectedPropertyId && state.openDetails) {
+        const marker = new Marker({
+          color: '#FF0000',
+          // draggable: true
+        });
+        marker.setLngLat([
+          state.selectedPropertyObj.geocode.Longitude,
+          state.selectedPropertyObj.geocode.Latitude,
+        ]);
+        this.mapMarkers.push(marker);
+        this.openPropertyDetails(marker, state.selectedPropertyObj);
+        return;
+      }
+
       this.propertyList = state.propertyList;
       for (const property of this.propertyList) {
         this.geoCoordinates.push({
@@ -99,18 +114,22 @@ export class MapBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   addOnClickMarkerEventListener(marker: Marker, property: any) {
     marker.getElement().addEventListener('click', (e) => {
       this.storeService.state = { selectedPropertyId: property.propertyID };
-      for (let markerItem of this.mapMarkers) {
-        markerItem.remove();
-      }
-      if (this.map instanceof Map) {
-        marker.addTo(this.map);
-        this.map.setCenter({
-          lat: property.geocode.Latitude,
-          lng: property.geocode.Longitude,
-        });
-        this.map.setZoom(15);
-      }
+      this.openPropertyDetails(marker, property);
     });
+  }
+
+  openPropertyDetails(marker: Marker, property: Property) {
+    for (let markerItem of this.mapMarkers) {
+      markerItem.remove();
+    }
+    if (this.map instanceof Map) {
+      marker.addTo(this.map);
+      this.map.setCenter({
+        lat: property.geocode.Latitude,
+        lng: property.geocode.Longitude,
+      });
+      this.map.setZoom(15);
+    }
   }
 
   listenMapClicks() {
